@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WhatsApp Random Redirect</title>
+</head>
+<body>
+
+    <h1>Redirecting to WhatsApp...</h1>
+    <p>Please wait a moment while we select a contact.</p>
+
+    <script>
+        // 1. JSON formatted list of phone numbers (use international format without '+' or '00')
+        // Example: '447700900123' for a UK number
+        const phoneNumbers = [
+            "866646822",
+            "12345678902",
+            "12345678903",
+            "12345678904"
+        ];
+
+        // 2. Function to select a random number
+        function getRandomPhoneNumber(numbersArray) {
+            const randomIndex = Math.floor(Math.random() * numbersArray.length);
+            return numbersArray[randomIndex];
+        }
+
+        // 3. Select the random phone number
+        const selectedNumber = getRandomPhoneNumber(phoneNumbers);
+
+        // 4. Construct the WhatsApp URL
+        // The URL for initiating a chat is typically:
+        // https://wa.me/<NUMBER> or the one you specified
+        const whatsappBaseUrl = "https://web.whatsapp.com/send/";
+        const redirectUrl = `${whatsappBaseUrl}?phone=07${selectedNumber}&text&type=phone_number&app_absent=0`;
+
+        console.log(`Selected Number: ${selectedNumber}`);
+        console.log(`Redirecting to: ${redirectUrl}`);
+
+        // 5. Redirect the user (using a slight delay for better compatibility)
+        setTimeout(() => {
+            window.location.replace(redirectUrl);
+        }, 100); 
+
+        // Optional: Provide a manual link as a fallback
+        document.querySelector('p').innerHTML = `If the automatic redirect fails, click here: <a href="${redirectUrl}">Chat on WhatsApp</a>`;
+
+    </script>
+
+</body>
+</html>
