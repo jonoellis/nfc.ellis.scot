@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirecting...</title>
+    <script>
+        /**
+         * Function to get the ordinal suffix (st, nd, rd, th) for a day number.
+         * @param {number} day - The day of the month (1-31).
+         * @returns {string} The ordinal suffix.
+         */
+        function getOrdinalSuffix(day) {
+            if (day > 3 && day < 21) return 'th'; // 11th, 12th, 13th
+            switch (day % 10) {
+                case 1: return 'st';
+                case 2: return 'nd';
+                case 3: return 'rd';
+                default: return 'th';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const BASE_URL = "http://photos.google.com/search/";
+            
+            // Get today's date
+            const today = new Date();
+            const dayOfMonth = today.getDate(); // e.g., 14
+            
+            // Get the full month name in English (lowercase)
+            const monthName = today.toLocaleString('en-US', { month: 'long' }).toLowerCase(); // e.g., "december"
+            
+            // Combine day, suffix, and month name
+            const ordinalSuffix = getOrdinalSuffix(dayOfMonth); // e.g., "th"
+            
+            // Final path fragment: "14th december"
+            const pathFragment = `${dayOfMonth}${ordinalSuffix} ${monthName}`;
+
+            // Construct the final URL
+            const finalURL = BASE_URL + pathFragment;
+            
+            // Perform the redirect
+            console.log("Redirecting to:", finalURL);
+            window.location.replace(finalURL);
+            
+            // Fallback for browsers that don't execute JS or if JS fails quickly
+            const fallbackLink = document.getElementById('fallback-link');
+            fallbackLink.href = finalURL;
+            fallbackLink.textContent = "Click here to continue to the photo.";
+        });
+    </script>
+</head>
+<body>
+    <h1>Redirecting...</h1>
+    <p>If you are not redirected automatically, please wait a moment or use the link below.</p>
+    <p><a id="fallback-link" href="#">Initiate Redirect</a></p>
+</body>
+</html>
